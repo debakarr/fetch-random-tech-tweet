@@ -1,5 +1,7 @@
 # random-tips-from-twitter
 
+> This is inspired by [Vue JS Crash Course by Traversy Media](https://github.com/bradtraversy/vue-crash-2021).
+
 ## Project setup
 ```
 npm install
