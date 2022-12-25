@@ -29,14 +29,14 @@ export default {
   methods: {
     async fetchRandomTweet() {
       this.isFetching = true
-      let res = await fetch("https://random-tech-tweet-generator-backend.vercel.app/metadata")
+      let res = await fetch("https://fetch-random-tech-tweet-backend.vercel.app/metadata")
       let results = await res.json()
       let randomNumber = Math.floor((Math.random() * results.entries) + 1);
 
-      res = await fetch("https://random-tech-tweet-generator-backend.vercel.app/tweets/" + randomNumber)
+      res = await fetch("https://fetch-random-tech-tweet-backend.vercel.app/tweets/" + randomNumber)
       results = await res.json()
 
-      res = await fetch("https://random-tech-tweet-generator-backend.vercel.app/tweets?tweet_conversation_id=" + results.tweet_conversation_id + "&_sort=tweet_id")
+      res = await fetch("https://fetch-random-tech-tweet-backend.vercel.app/tweets?tweet_conversation_id=" + results.tweet_conversation_id + "&_sort=tweet_id")
       const tweets = await res.json()
 
       const onlyContainsOthers = (currentValue) => currentValue.tweet_type === "Others";
@@ -55,7 +55,7 @@ export default {
         return
       }
       const tweet_conversation_id = this.visited[this.current_index - 1]
-      const res = await fetch("https://random-tech-tweet-generator-backend.vercel.app/tweets?tweet_conversation_id=" + tweet_conversation_id + "&_sort=tweet_id")
+      const res = await fetch("https://fetch-random-tech-tweet-backend.vercel.app/tweets?tweet_conversation_id=" + tweet_conversation_id + "&_sort=tweet_id")
       this.tweets = await res.json()
       this.current_index -= 1
     },
@@ -65,7 +65,7 @@ export default {
         return
       }
       const tweet_conversation_id = this.visited[this.current_index + 1]
-      const res = await fetch("https://random-tech-tweet-generator-backend.vercel.app/tweets?tweet_conversation_id=" + tweet_conversation_id + "&_sort=tweet_id")
+      const res = await fetch("https://fetch-random-tech-tweet-backend.vercel.app/tweets?tweet_conversation_id=" + tweet_conversation_id + "&_sort=tweet_id")
       this.tweets = await res.json()
       this.current_index += 1
     },
