@@ -1,7 +1,7 @@
 <template>
   <div class="container" ref="DownloadComp">
-    <Header @generate-random-tweet="generateRandomTweet" @go-to-previous-tweet="goToPreviousTweet"
-      @go-to-next-tweet="goToNextTweet" @download-as-pdf="downloadAsPdf" title="Random Tech Tweet Generator"
+    <Header @fetch-random-tweet="fetchRandomTweet" @go-to-previous-tweet="goToPreviousTweet"
+      @go-to-next-tweet="goToNextTweet" @download-as-pdf="downloadAsPdf" title="Fetch Radom Technical Tweet"
       :tweet="tweets[0]" />
     <Tweets :tweets="tweets" />
   </div>
@@ -10,25 +10,25 @@
 <script>
 import Header from "./components/Header"
 import Tweets from "./components/Tweets"
-import VueHtml2pdf from 'vue-html2pdf'
 
 export default {
   name: 'App',
   components: {
     Header,
     Tweets,
-    VueHtml2pdf
   },
   data() {
     return {
       tweets: [],
+      isFetching: false,
     }
   },
   props: {
-    history: Array
+    history: Array,
   },
   methods: {
-    async generateRandomTweet() {
+    async fetchRandomTweet() {
+      this.isFetching = true
       let res = await fetch("https://random-tech-tweet-generator-backend.vercel.app/metadata")
       let results = await res.json()
       let randomNumber = Math.floor((Math.random() * results.entries) + 1);
@@ -41,32 +41,33 @@ export default {
 
       const onlyContainsOthers = (currentValue) => currentValue.tweet_type === "Others";
       if (tweets.every(onlyContainsOthers)) {
-        await this.generateRandomTweet()
+        await this.fetchRandomTweet()
       } else {
         this.tweets = tweets
-        self.visited.push(results.tweet_conversation_id)
-        self.current_index = self.visited.length - 1
+        this.visited.push(results.tweet_conversation_id)
+        this.current_index = this.visited.length - 1
       }
+      this.isFetching = false
     },
     async goToPreviousTweet() {
-      if (self.current_index < 1) {
+      if (this.current_index < 1) {
         console.log("Either there are no tweets or you are in the first random tweet")
         return
       }
-      const tweet_conversation_id = self.visited[self.current_index - 1]
+      const tweet_conversation_id = this.visited[this.current_index - 1]
       const res = await fetch("https://random-tech-tweet-generator-backend.vercel.app/tweets?tweet_conversation_id=" + tweet_conversation_id + "&_sort=tweet_id")
       this.tweets = await res.json()
-      self.current_index -= 1
+      this.current_index -= 1
     },
     async goToNextTweet() {
-      if (self.current_index + 1 === self.visited.length) {
+      if (this.current_index + 1 === this.visited.length) {
         console.log("Either there are no tweets or you are in the last random tweet")
         return
       }
-      const tweet_conversation_id = self.visited[self.current_index + 1]
+      const tweet_conversation_id = this.visited[this.current_index + 1]
       const res = await fetch("https://random-tech-tweet-generator-backend.vercel.app/tweets?tweet_conversation_id=" + tweet_conversation_id + "&_sort=tweet_id")
       this.tweets = await res.json()
-      self.current_index += 1
+      this.current_index += 1
     },
     downloadAsPdf() {
       let w = window.open()
@@ -78,9 +79,9 @@ export default {
     }
   },
   async created() {
-    self.tweets = []
-    self.visited = []
-    self.current_index = 0
+    this.tweets = []
+    this.visited = []
+    this.current_index = 0
   }
 }
 </script>

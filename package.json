@@ -1,5 +1,5 @@
 {
-  "name": "random-tips-from-twitter",
+  "name": "fetch-random-tech-tweet",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "vue": "^3.2.13",
-    "vue-html2pdf": "^1.8.0"
+    "vue": "^3.2.13"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
