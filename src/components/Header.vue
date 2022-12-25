@@ -1,6 +1,7 @@
 <template>
     <header>
         <h1>{{ title }}</h1>
+        <Button @click="openSourceInNewTab" text="Source" color="black" icon="fa-brands fa-github" />
     </header>
     <Button @click="$emit('go-to-previous-tweet')" text="Prev" color="#337ab7" icon="fa-solid fa-backward" />
     <Button v-if="this.$parent.isFetching" text="Fetching" color="#5cb85c" icon="fa-solid fa-spinner fa-spin" />
@@ -26,6 +27,10 @@ export default {
     methods: {
         openTweetInNewTab() {
             const url = "https://twitter.com/" + this.tweet.username + "/status/" + this.tweet.tweet_id
+            window.open(url, '_blank');
+        },
+        openSourceInNewTab() {
+            const url = "https://github.com/Dibakarroy1997/fetch-random-tech-tweet"
             window.open(url, '_blank');
         }
     }
