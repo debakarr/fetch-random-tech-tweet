@@ -1,12 +1,12 @@
 <template>
     <header>
         <h1>{{ title }}</h1>
-        <Button @click="$emit('go-to-previous-tweet')" text="Prev" color="#337ab7" />
-        <Button @click="$emit('generate-random-tweet')" text="Generate tweet" color="#5cb85c" />
-        <Button @click="$emit('go-to-next-tweet')" text="Next" color="#f0ad4e" />
-        <Button @click="openTweetInNewTab" text="Tweet Source" color="#5bc0de" />
-        <Button @click="$emit('download-as-pdf')" text="Download as PDF" color="#d9534f" />
     </header>
+    <Button @click="$emit('go-to-previous-tweet')" text="Prev" color="#337ab7" />
+    <Button @click="$emit('generate-random-tweet')" text="Generate tweet" color="#5cb85c" />
+    <Button @click="$emit('go-to-next-tweet')" text="Next" color="#f0ad4e" />
+    <Button @click="openTweetInNewTab" text="Tweet Source" color="#5bc0de" />
+    <Button @click="$emit('download-as-pdf')" text="Download as PDF" color="#d9534f" />
 </template>
 
 <script>
