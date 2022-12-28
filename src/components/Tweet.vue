@@ -1,6 +1,6 @@
 <template>
     <div class="tweet">
-        <h3>{{ tweet.tweet_text }}</h3>
+        <h3 v-html="tweet.tweet_text"></h3>
         <Medias :medias="medias" />
     </div>
 </template>
